@@ -1,0 +1,11 @@
+# Ignore directories
+bin/
+obj/
+
+# Ignore specific file types
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.user
