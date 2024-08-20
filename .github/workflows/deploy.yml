@@ -20,7 +20,7 @@ jobs:
       run: nuget restore ObligatorioAppWeb.sln
 
     - name: Build the project
-      run: msbuild ObligatorioAppWeb.sln /p:Configuration=Release
+      run: msbuild ObligatorioAppWeb.sln /p:Configuration=Release /p:OutDir=D:/a/ObligatorioAppWeb/ObligatorioAppWeb/web/Release/
       
     - name: Listar archivos antes del despliegue
       run: ls -R D:\a\ObligatorioAppWeb\ObligatorioAppWeb\web
