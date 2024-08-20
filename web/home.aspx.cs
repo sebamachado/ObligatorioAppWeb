@@ -16,7 +16,7 @@ public partial class home : System.Web.UI.Page
         // Obtén la hora del último despliegue
         string lastDeployTime = ParametersActions.GetParameter("ultimoDeploy");
         // Actualiza el texto del Label con la hora del último despliegue
-        lblLastDeploy.Text = "Hora del último despliegue: " + lastDeployTime;
+        lblLastDeploy.Text = "Último despliegue: " + lastDeployTime;
 
     }
 } 
