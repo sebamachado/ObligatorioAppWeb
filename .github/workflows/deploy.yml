@@ -1,4 +1,4 @@
-name: Deploy to FTP
+name: Deploy Montevideo Terminal
 
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
     - name: Build the project
       run: msbuild ObligatorioAppWeb.sln /p:Configuration=Release /p:OutDir=D:/a/ObligatorioAppWeb/ObligatorioAppWeb/web/Release/
       
-    - name: Listar archivos antes del despliegue
+    - name: List directories
       run: ls -R D:\a\ObligatorioAppWeb\ObligatorioAppWeb\web
       
-    - name: Upload to FTP Server
+    - name: Upload to Server
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
         server: montevideoterminal.somee.com
