@@ -10,3 +10,4 @@ obj/
 *.log
 *.user
 web.config
+conection.cs
