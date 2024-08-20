@@ -21,7 +21,10 @@ jobs:
 
     - name: Build the project
       run: msbuild ObligatorioAppWeb.sln /p:Configuration=Release
-
+      
+    - name: Listar archivos antes del despliegue
+      run: ls -R D:\a\ObligatorioAppWeb\ObligatorioAppWeb\web
+      
     - name: Upload to FTP Server
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
