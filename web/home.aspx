@@ -9,6 +9,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:Label ID="lblLastDeploy" runat="server" CssClass="info-text">
+            Hora del último despliegue:
+        </asp:Label>
         <div class="container">
             <div class="image-container">
                 <asp:Image ID="Image1" runat="server" CssClass="home-logo" ImageUrl="~/images/logo.jpg" />

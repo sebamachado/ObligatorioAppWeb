@@ -69,7 +69,17 @@ CREATE TABLE Viajes (
 );
 GO
 
+-- Crear la tabla Terminales
+CREATE TABLE Parametros (
+    nombre VARCHAR(100) NOT NULL PRIMARY KEY,
+    valor VARCHAR(100) NOT NULL
+);
+GO
+
 -- Registros de prueba
+INSERT INTO Parametros (nombre, valor) VALUES 
+('ultimoDeploy', '19/08/2024 22:00');
+GO
 -- Insertar registros en la tabla Companias
 INSERT INTO Companias (nombre, direccion_matriz) VALUES 
 ('Transporte Uruguayo', 'Av. 18 de Julio 1234, Montevideo, Uruguay'),
@@ -731,6 +741,19 @@ BEGIN
 		JOIN Telefonos_Contacto t on t.nombre_compania=c.nombre;
 END;
 GO
+
+--SP ListarTerminales
+CREATE PROCEDURE BuscarParametro
+    @parametro varchar(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN
+	select * from Parametros where nombre=@parametro;
+    END
+END;
+GO
+
 ------------------------------------------------------------------------------------------------------------------------------------
 
 

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompanyActions.cs" />
+    <Compile Include="ParametersActions.cs" />
     <Compile Include="TerminalActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

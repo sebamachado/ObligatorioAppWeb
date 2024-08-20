@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="conection.cs" />
     <Compile Include="CompanyPersistence.cs" />
+    <Compile Include="ParametersPersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerminalPersistence.cs" />
   </ItemGroup>
