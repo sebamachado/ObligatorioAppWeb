@@ -34,3 +34,9 @@ jobs:
         local-dir: ./web/Release/_PublishedWebsites/web/
         server-dir: www.montevideoterminal.somee.com/
         cleanup: true
+        
+    - name: Update last deploy parameter
+      run: |
+        sqlcmd -S montevideoTerminal.mssql.somee.com -d montevideoTerminal -U ${{ secrets.SQL_USERNAME }} -P ${{ secrets.SQL_PASSWORD }} -Q "UPDATE parametros SET valor = FORMAT(GETDATE(), 'dd/MM/yyyy HH:mm:ss') WHERE nombre = 'ultimoDeploy';"
+      env:
+        PATH: ${{ runner.tool_cache }}/sqlcmd:${{ env.PATH }}
