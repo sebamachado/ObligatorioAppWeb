@@ -200,3 +200,13 @@ body, html {
 .table-container .link-cell {
     text-align: center; /* Alineación del texto al centro */
 }
+
+.center {     
+	position: fixed;     
+	bottom: 0;     
+	left: 50%;     
+	transform: translateX(-50%);     
+	width: 100%;     
+	text-align: center; 
+	z-index: 1000; 
+}
