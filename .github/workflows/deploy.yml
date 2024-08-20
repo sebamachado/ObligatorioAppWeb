@@ -25,7 +25,7 @@ jobs:
     - name: Upload to FTP Server
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        ftp-server: ftp://montevideoterminal.somee.com/www.montevideoterminal.somee.com
+        ftp-server: montevideoterminal.somee.com
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./bin/Release
