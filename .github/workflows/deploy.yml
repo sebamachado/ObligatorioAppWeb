@@ -13,11 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install .NET Framework 4.0 Developer Pack
-      run: |
-        Invoke-WebRequest -Uri https://download.microsoft.com/download/4/6/4/4646C6F0-29C1-44F2-B979-92EDEAA7BF3D/NetFx4.0_ClientProfile.exe -OutFile NetFx4.0_ClientProfile.exe
-        Start-Process -FilePath NetFx4.0_ClientProfile.exe -ArgumentList '/quiet /norestart' -NoNewWindow -Wait
-
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v1.0.3
 
