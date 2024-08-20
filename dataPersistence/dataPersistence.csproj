@@ -8,8 +8,8 @@
     <ProjectGuid>{B7C9E2CC-9457-4A99-9063-4591C52D23A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>persistencia</RootNamespace>
-    <AssemblyName>persistencia</AssemblyName>
+    <RootNamespace>dataPersistence</RootNamespace>
+    <AssemblyName>dataPersistence</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
