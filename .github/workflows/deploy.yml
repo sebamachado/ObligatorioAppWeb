@@ -31,5 +31,6 @@ jobs:
         server: montevideoterminal.somee.com
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./web/Release/
+        local-dir: ./web/Release/_PublishedWebsites/web/
         server-dir: www.montevideoterminal.somee.com/
+        cleanup: true
