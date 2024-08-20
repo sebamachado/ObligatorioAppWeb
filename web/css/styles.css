@@ -1,0 +1,202 @@
+﻿
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Color de fondo negro */
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.header {
+    font-size: 24px; /* Tamaño de fuente mayor para mayor visibilidad */
+    font-weight: 700; /* Peso de fuente más fuerte para mayor énfasis */
+    text-align: center; /* Centra el texto */
+    color: #990000; /* Color del texto */
+    margin-bottom: 20px; /* Mayor espacio debajo del encabezado */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Espacio entre letras para mayor claridad */
+    border-bottom: 2px solid #990000; /* Línea decorativa debajo del título */
+    padding-bottom: 10px; /* Espacio entre el texto y la línea decorativa */
+}
+
+
+.home-logo {
+    height: 315px;
+    width: 387px;
+    margin-bottom: 20px; /* Espacio debajo del logo */
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    min-height: 60vh; /* Altura mínima del contenedor */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del ancho y alto */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos dentro del contenedor */
+    gap: 20px; /* Espacio entre los elementos */
+}
+
+.image-container {
+    max-width: 100%; /* Asegura que el contenedor no exceda el ancho del contenedor principal */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+}
+
+.home-content {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+    width: 100%;
+}
+
+.page-logo {
+    width: 200px; /* Ajusta el ancho deseado */
+    height: auto; /* Mantiene la proporción */
+}
+
+/* Estilos para el contenedor del contenido */
+.page-content {
+    width: 100%;
+    max-width: 800px; /* Ancho máximo del contenedor */
+    min-height: 60vh; /* Altura mínima del contenedor (60% de la altura de la ventana) */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del ancho y alto */
+}
+
+
+.link-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin: 0; /* Elimina márgenes adicionales */
+}
+.home-content .link-button {
+    flex: 0 1 calc(50% - 20px); /* Dos botones por fila con un espacio de 20px entre ellos */
+    /* Ajusta el tamaño de los botones según sea necesario */
+}
+
+/* Para el último botón */
+.home-content .link-button:nth-child(7) {
+    flex: 0 1 96%; /* Ocupa toda la fila */
+    text-align: center; /* Centra el texto del botón */
+
+}
+
+/* Estilo general para todos los .grid-container */
+.grid-container {
+    max-width: 100%; /* Asegura que el contenedor se ajuste al 100% del ancho disponible */
+    margin: 20px auto; /* Centra horizontalmente con auto y agrega espacio superior e inferior */
+    overflow: hidden; /* Evita que el contenido se desborde del contenedor */
+    border-radius: 5px; /* Bordes redondeados */
+    height: 255px; /* Altura fija para el contenedor del GridView */
+    overflow-y: auto; /* Barra de desplazamiento vertical cuando el contenido excede la altura */
+}
+
+/* Asegura que la tabla ocupe todo el ancho del .grid-container */
+.grid-container table {
+    width: 100%; /* La tabla ocupará el 100% del ancho disponible dentro del contenedor */
+    table-layout: auto;
+}
+
+/* Estilo para los encabezados dentro del GridView en el .grid-container */
+.grid-container th {
+    background-color: #990000; /* Color de fondo para el encabezado */
+    color: white; /* Color del texto del encabezado */
+    padding: 10px; /* Espacio dentro del encabezado */
+    text-align: center; /* Alineación del texto */
+    font-weight: bold; /* Fuente en negrita */
+    border: 2px solid #000; /* Borde negro en los encabezados para mejor visibilidad */
+}
+
+/* Estilo para las celdas dentro del GridView en el .grid-container */
+.grid-container td {
+    background-color: #FFFBD6; /* Color de fondo para las celdas */
+    color: #333333; /* Color del texto en las celdas */
+    padding: 10px; /* Espacio dentro de las celdas */
+    border: 2px solid #000; /* Borde negro alrededor de las celdas para mejor visibilidad */
+}
+
+/* Alternar el color de las filas para mejorar la legibilidad en el .grid-container */
+.grid-container tr:nth-child(even) td {
+    background-color: #F7F7F7; /* Color de fondo para filas pares */
+}
+
+
+/* Estilo general para la tabla */
+.table-container {
+    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho disponible */
+    border-collapse: collapse; /* Fusiona los bordes de las celdas */
+    margin: 20px 0; /* Espacio superior e inferior */
+    text-align: center; /* Alinea el texto al centro en la tabla */
+}
+
+/* Estilo para las filas de la tabla */
+.table-container tr {
+    height: 100%; /* Asegura que las filas ocupen el máximo espacio disponible dentro del contenedor */
+}
+
+/* Estilo para las celdas de la tabla */
+.table-container td {
+    padding: 10px; /* Espacio dentro de las celdas */    
+    text-align: center; /* Alineación horizontal del contenido al centro */
+    vertical-align: middle; /* Alineación vertical del contenido al centro */
+    height: 100%; /* Asegura que las celdas ocupen el máximo espacio vertical disponible */
+    width: 33.33%; /* Divide el ancho de la tabla en tercios iguales */
+}
+
+/* Estilo específico para la primera columna (labels) */
+.table-container .label-cell {
+    text-align: right; /* Alineación del texto a la derecha */
+}
+
+/* Estilo específico para la segunda columna (text boxes y botones) */
+.table-container .input-cell {
+    text-align: center; /* Alineación del texto al centro */
+}
+
+/* Estilo para la tercera columna (botones) */
+.table-container .button-cell {
+    text-align: center; /* Alineación del texto al centro */
+}
+
+/* Estilo para el grupo de botones */
+.table-container .button-group {
+    text-align: center; /* Alineación del contenido al centro */
+}
+/* Estilo para las etiquetas de error */
+.table-container .error-cell {
+    text-align: center; /* Alineación del texto al centro */
+    color: #990000; /* Color del texto de las etiquetas de error */
+    font-weight: bold; /* Fuente en negrita para destacar el mensaje de error */
+    white-space: normal; /* Permite que el texto se ajuste y haga saltos de línea */
+    overflow: hidden; /* Oculta el texto que excede el ancho del contenedor */
+    width: 180px; /* Ancho fijo para la celda de error */
+}
+
+
+.table-container .link-cell {
+    text-align: center; /* Alineación del texto al centro */
+}
