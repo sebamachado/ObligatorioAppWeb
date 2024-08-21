@@ -45,6 +45,7 @@
     <Compile Include="ParametersPersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerminalPersistence.cs" />
+    <Compile Include="TripPersistence.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sharedEntities\sharedEntities.csproj">

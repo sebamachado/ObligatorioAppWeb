@@ -21,7 +21,7 @@
                 <asp:LinkButton ID="lknCategorias" runat="server" CssClass="link-button" PostBackUrl="~/NterminalMaintenance.aspx">Mantenimiento Terminal Nacional</asp:LinkButton>
                 <asp:LinkButton ID="lknAgregarPrivado" runat="server" CssClass="link-button" PostBackUrl="~/IterminalMaintenance.aspx">Mantenimiento Terminal Internacional</asp:LinkButton>
                 <asp:LinkButton ID="lknListCompanies" runat="server" CssClass="link-button" PostBackUrl="~/ListAllCompanies.aspx">Listado Todas Las Compañias</asp:LinkButton>
-                <asp:LinkButton ID="lknListadoComun" runat="server" CssClass="link-button" PostBackUrl="~/home.aspx">Agregar Viaje (No disponible)</asp:LinkButton>
+                <asp:LinkButton ID="lknListadoComun" runat="server" CssClass="link-button" PostBackUrl="~/AddTrip.aspx">Agregar Viaje</asp:LinkButton>
                 <asp:LinkButton ID="lknListadoPrivados" runat="server" CssClass="link-button" PostBackUrl="~/ListAllTerminals.aspx">Listado Terminales</asp:LinkButton>
                 <asp:LinkButton ID="LinkButton1" runat="server" CssClass="link-button" PostBackUrl="~/home.aspx">Listado Viajes Terminal Mes/Año (No disponible)</asp:LinkButton>
             </div>

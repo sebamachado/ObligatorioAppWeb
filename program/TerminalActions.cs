@@ -64,5 +64,10 @@ namespace program
         {
             throw new NotImplementedException();
         }
+
+        public static Terminal Read(string pCodeTerminal)
+        {
+            return TerminalPersistence.FindTerminal(pCodeTerminal);
+        }
     }
 }

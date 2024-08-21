@@ -422,5 +422,35 @@ namespace dataPersistence
 
             return coliTerminals;
         }
+
+        public static Terminal FindTerminal(string pCodeTerminal)
+        {
+            // Intentar buscar una terminal nacional
+            Terminal objNterminal = findNterminal(pCodeTerminal);
+            if (objNterminal != null)
+            {
+                return objNterminal; // Retornar la terminal nacional si se encuentra
+            }
+
+            // Intentar buscar una terminal internacional
+            Terminal objIterminal = findIterminal(pCodeTerminal);
+            if (objIterminal != null)
+            {
+                return objIterminal; // Retornar la terminal internacional si se encuentra
+            }
+
+            // Si ninguna de las dos terminales se encuentra, lanzar una excepción
+            
+            try
+            {
+                if (objIterminal==null && objNterminal==null)
+                    throw new Exception("No existe una Terminal con ese Código.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return null;
+        }
     }
 }

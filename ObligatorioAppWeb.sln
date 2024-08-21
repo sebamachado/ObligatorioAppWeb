@@ -1,11 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataPersistence", "persistencia\dataPersistence.csproj", "{B7C9E2CC-9457-4A99-9063-4591C52D23A4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D39F2364-0562-4F2C-94A7-0B3A7E854BA3} = {D39F2364-0562-4F2C-94A7-0B3A7E854BA3}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "program", "program\program.csproj", "{E314330A-828A-4476-85A9-A2E987EF8CD1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D39F2364-0562-4F2C-94A7-0B3A7E854BA3} = {D39F2364-0562-4F2C-94A7-0B3A7E854BA3}
@@ -17,7 +12,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web", "web\", "{ECA1BD86-66F7-4D0D-ABA3-14478521B097}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{E314330A-828A-4476-85A9-A2E987EF8CD1}|program.dll;{B7C9E2CC-9457-4A99-9063-4591C52D23A4}|persistencia.dll;{D39F2364-0562-4F2C-94A7-0B3A7E854BA3}|sharedEntities.dll;"
+		ProjectReferences = "{E314330A-828A-4476-85A9-A2E987EF8CD1}|program.dll;{D39F2364-0562-4F2C-94A7-0B3A7E854BA3}|sharedEntities.dll;{B7C9E2CC-9457-4A99-9063-4591C52D23A4}|dataPersistence.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/web"
 		Debug.AspNetCompiler.PhysicalPath = "web\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\web\"
@@ -35,16 +30,14 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web", "web\", "{ECA1BD86-66
 		VWDPort = "51341"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataPersistence", "dataPersistence\dataPersistence.csproj", "{B7C9E2CC-9457-4A99-9063-4591C52D23A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E314330A-828A-4476-85A9-A2E987EF8CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E314330A-828A-4476-85A9-A2E987EF8CD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E314330A-828A-4476-85A9-A2E987EF8CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +50,10 @@ Global
 		{ECA1BD86-66F7-4D0D-ABA3-14478521B097}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA1BD86-66F7-4D0D-ABA3-14478521B097}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{ECA1BD86-66F7-4D0D-ABA3-14478521B097}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C9E2CC-9457-4A99-9063-4591C52D23A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

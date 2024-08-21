@@ -44,9 +44,10 @@
     <Compile Include="ParametersActions.cs" />
     <Compile Include="TerminalActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TripActions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\persistencia\dataPersistence.csproj">
+    <ProjectReference Include="..\dataPersistence\dataPersistence.csproj">
       <Project>{B7C9E2CC-9457-4A99-9063-4591C52D23A4}</Project>
       <Name>dataPersistence</Name>
     </ProjectReference>

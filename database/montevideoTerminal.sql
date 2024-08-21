@@ -492,6 +492,17 @@ BEGIN
 END;
 GO
 
+--SP Buscar Compañia
+CREATE PROCEDURE BuscarTerminalPorCodigo
+@codigo_terminal CHAR(6)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	SELECT * from Terminales where id=@codigo_terminal;
+
+END;
+GO
 --------------------------------------------------------------VIAJES------------------------------------------------------------------
 
 --SP Agregar Viaje
