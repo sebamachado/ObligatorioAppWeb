@@ -13,5 +13,14 @@ namespace program
         {
             TripPersistence.AddTrip(pTrip);
         }
+
+        public static List<Trip> ListTripsByTerminalMY(Terminal pTerminal, string pMonth, string pYear)
+        {
+            return TripPersistence.ListTripsByTerminalMY(pTerminal, pMonth, pYear);
+        }
+        public static List<Trip> ListAllTrips()
+        {
+            return TripPersistence.ListAllTrips();
+        }
     }
 }

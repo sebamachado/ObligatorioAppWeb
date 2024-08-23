@@ -44,7 +44,7 @@
             </div>
             <div class="link-container">
                 <asp:LinkButton ID="lknVolver" runat="server" PostBackUrl="~/ListAllTerminals.aspx">Eleccion Tipo de Terminal</asp:LinkButton>
-                <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/home.aspx"><br>Volver al Menu</asp:LinkButton>
+                <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/home.aspx"><br/>Volver al Menu</asp:LinkButton>
             </div>
         </div>
     </form>

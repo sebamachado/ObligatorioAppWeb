@@ -561,6 +561,83 @@ ErrorHandling:
 END;
 GO
 
+CREATE PROCEDURE ListadoViajesTerminalMesAño
+    @id_terminal CHAR(6),
+    @mes INT,
+    @anio INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+    SET @Error = 0;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Verificar si la terminal existe
+        IF NOT EXISTS (SELECT 1 FROM Terminales WHERE id = @id_terminal)
+        BEGIN
+            SET @Error = -1; -- La terminal no existe en la base de datos
+            GOTO ErrorHandling;
+        END
+
+        -- Seleccionar los viajes según el terminal y las fechas indicadas
+        SELECT 
+            v.*
+        FROM 
+            Viajes v
+        WHERE 
+            v.id_terminal = @id_terminal
+            AND MONTH(v.dt_salida) = @mes
+            AND YEAR(v.dt_salida) = @anio;
+
+        COMMIT TRANSACTION;
+        RETURN @Error;
+
+    END TRY
+    BEGIN CATCH
+        SET @Error = -3; -- Otro error
+        GOTO ErrorHandling;
+    END CATCH;
+
+ErrorHandling:
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+    RETURN @Error;
+END;
+GO
+
+CREATE PROCEDURE ListadoViajes
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+    SET @Error = 0;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            v.*
+        FROM 
+            Viajes v;
+
+        COMMIT TRANSACTION;
+        RETURN @Error;
+
+    END TRY
+    BEGIN CATCH
+        SET @Error = -3; -- Otro error
+        GOTO ErrorHandling;
+    END CATCH;
+
+ErrorHandling:
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+    RETURN @Error;
+END;
+GO
+
 --------------------------------------------------------------COMPANIAS------------------------------------------------------------------
 --SP Buscar Compañia
 CREATE PROCEDURE BuscarCompania

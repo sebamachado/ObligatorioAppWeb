@@ -425,31 +425,43 @@ namespace dataPersistence
 
         public static Terminal FindTerminal(string pCodeTerminal)
         {
-            // Intentar buscar una terminal nacional
-            Terminal objNterminal = findNterminal(pCodeTerminal);
-            if (objNterminal != null)
+            Terminal objNterminal = null;
+            Terminal objIterminal = null;
+
+            try
             {
-                return objNterminal; // Retornar la terminal nacional si se encuentra
+                // Intentar buscar una terminal nacional
+                objNterminal = findNterminal(pCodeTerminal);
+                if (objNterminal != null)
+                {
+                    return objNterminal; // Retornar la terminal nacional si se encuentra
+                }
+            }
+            catch (Exception)
+            {
+                // Ignorar cualquier excepción en la búsqueda de la terminal nacional
             }
 
-            // Intentar buscar una terminal internacional
-            Terminal objIterminal = findIterminal(pCodeTerminal);
-            if (objIterminal != null)
+            try
             {
-                return objIterminal; // Retornar la terminal internacional si se encuentra
+                // Intentar buscar una terminal internacional
+                objIterminal = findIterminal(pCodeTerminal);
+                if (objIterminal != null)
+                {
+                    return objIterminal; // Retornar la terminal internacional si se encuentra
+                }
+            }
+            catch (Exception)
+            {
+                // Ignorar cualquier excepción en la búsqueda de la terminal internacional
             }
 
             // Si ninguna de las dos terminales se encuentra, lanzar una excepción
-            
-            try
+            if (objNterminal == null && objIterminal == null)
             {
-                if (objIterminal==null && objNterminal==null)
-                    throw new Exception("No existe una Terminal con ese Código.");
+                throw new Exception("No existe una Terminal con ese Código.");
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
             return null;
         }
     }

@@ -54,5 +54,103 @@ namespace dataPersistence
                 objConection.Close();
             }
         }
+
+        public static List<Trip> ListTripsByTerminalMY(Terminal pTerminal, string pMonth, string pYear)
+        {
+            List<Trip> colTrips = new List<Trip>();
+
+            SqlConnection objConection = new SqlConnection(conection.Cnn);
+            SqlCommand objCommand = new SqlCommand("ListadoViajesTerminalMesAño", objConection);
+            objCommand.CommandType = CommandType.StoredProcedure;
+            objCommand.Parameters.AddWithValue("@id_terminal", pTerminal.Id);
+            objCommand.Parameters.AddWithValue("@mes", pMonth);
+            objCommand.Parameters.AddWithValue("@anio", pYear);
+
+            try
+            {
+                objConection.Open();
+                SqlDataReader objReader = objCommand.ExecuteReader();
+
+                if (objReader.HasRows)
+                {
+                    while (objReader.Read())
+                    {
+                        DateTime DepartureDate = DateTime.Parse(objReader["dt_salida"].ToString());
+                        DateTime EstimatedArrivalDate = DateTime.Parse(objReader["dt_llegada"].ToString());
+                        int MaxPassengers = int.Parse(objReader["max_pasajeros"].ToString());
+                        double TicketPrice = double.Parse(objReader["precio_boleto"].ToString());
+                        int PlatformNumber = int.Parse(objReader["num_anden"].ToString());
+                        string nombre_compania = objReader["nombre_compania"].ToString();
+                        string term_code = objReader["id_terminal"].ToString();
+                        Company pCompany = CompanyPersistence.findCompany(nombre_compania);
+
+                        Trip objTrip = new Trip(DepartureDate, EstimatedArrivalDate, MaxPassengers, TicketPrice, PlatformNumber,pTerminal,pCompany);
+
+                        colTrips.Add(objTrip);
+                    }
+                }
+
+                objReader.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                objConection.Close();
+            }
+
+            return colTrips;
+        }
+        public static List<Trip> ListAllTrips()
+        {
+            List<Trip> colTrips = new List<Trip>();
+
+            SqlConnection objConection = new SqlConnection(conection.Cnn);
+            SqlCommand objCommand = new SqlCommand("ListadoViajes", objConection);
+            objCommand.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                objConection.Open();
+                SqlDataReader objReader = objCommand.ExecuteReader();
+
+                if (objReader.HasRows)
+                {
+                    while (objReader.Read())
+                    {
+                        DateTime DepartureDate = DateTime.Parse(objReader["dt_salida"].ToString());
+                        DateTime EstimatedArrivalDate = DateTime.Parse(objReader["dt_llegada"].ToString());
+                        int MaxPassengers = int.Parse(objReader["max_pasajeros"].ToString());
+                        double TicketPrice = double.Parse(objReader["precio_boleto"].ToString());
+                        int PlatformNumber = int.Parse(objReader["num_anden"].ToString());
+                        string nombre_compania = objReader["nombre_compania"].ToString();
+                        string term_code = objReader["id_terminal"].ToString();
+                        Company pCompany = CompanyPersistence.findCompany(nombre_compania);
+                        Terminal pTerminal = TerminalPersistence.FindTerminal(term_code);
+
+                        Trip objTrip = new Trip(DepartureDate, EstimatedArrivalDate, MaxPassengers, TicketPrice, PlatformNumber, pTerminal, pCompany);
+
+                        colTrips.Add(objTrip);
+                    }
+                }
+
+                objReader.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                objConection.Close();
+            }
+
+            return colTrips;
+        }
     }
 }
