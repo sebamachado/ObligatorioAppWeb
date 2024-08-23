@@ -34,17 +34,13 @@ namespace dataPersistence
                     if (objReader.Read())
                     {
                         cityTerm = objReader["ciudad"].ToString();
-
-                        // Obtén el valor del servicio de taxi y conviértelo a booleano
                         int servicioTaxiValue = Convert.ToInt32(objReader["servicio_taxi"]);
                         taxiTerm = (servicioTaxiValue == 1);
-
                         objNterminal = new NationalTerminal(pCodTerm, cityTerm, taxiTerm);
                     }
                 }
                 objReader.Close();
                 int error = Convert.ToInt32(objParametro.Value);
-
                 if (error == -6)
                     throw new Exception("El codigo pertenece a una Terminal Internacional");
             }
@@ -434,7 +430,7 @@ namespace dataPersistence
                 objNterminal = findNterminal(pCodeTerminal);
                 if (objNterminal != null)
                 {
-                    return objNterminal; // Retornar la terminal nacional si se encuentra
+                    return objNterminal;
                 }
             }
             catch (Exception)
@@ -448,7 +444,7 @@ namespace dataPersistence
                 objIterminal = findIterminal(pCodeTerminal);
                 if (objIterminal != null)
                 {
-                    return objIterminal; // Retornar la terminal internacional si se encuentra
+                    return objIterminal;
                 }
             }
             catch (Exception)
