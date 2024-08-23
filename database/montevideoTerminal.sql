@@ -1,19 +1,77 @@
-USE MASTER
-GO
 
-IF EXISTS(SELECT * FROM sys.databases WHERE NAME = 'montevideoTerminal')
-BEGIN
-	DROP DATABASE montevideoTerminal
-END
-GO
 
--- Crear la base de datos
-CREATE DATABASE montevideoTerminal;
-GO
-
--- Usar la base de datos creada
+-- Usar la nueva base de datos
 USE montevideoTerminal;
 GO
+
+IF OBJECT_ID('Viajes', 'U') IS NOT NULL
+    DROP TABLE Viajes;
+
+IF OBJECT_ID('Telefonos_Contacto', 'U') IS NOT NULL
+    DROP TABLE Telefonos_Contacto;
+
+-- Eliminar tablas si existen
+IF OBJECT_ID('Companias', 'U') IS NOT NULL
+    DROP TABLE Companias;
+
+IF OBJECT_ID('iTerminales', 'U') IS NOT NULL
+    DROP TABLE iTerminales;
+
+IF OBJECT_ID('nTerminales', 'U') IS NOT NULL
+    DROP TABLE nTerminales;
+
+IF OBJECT_ID('Terminales', 'U') IS NOT NULL
+    DROP TABLE Terminales;
+
+IF OBJECT_ID('Parametros', 'U') IS NOT NULL
+    DROP TABLE Parametros;
+
+-- Eliminar procedimientos almacenados si existen
+IF OBJECT_ID('BuscarTerminal', 'P') IS NOT NULL
+    DROP PROCEDURE BuscarTerminal;
+
+IF OBJECT_ID('AgregarTerminal', 'P') IS NOT NULL
+    DROP PROCEDURE AgregarTerminal;
+
+IF OBJECT_ID('ModificarTerminal', 'P') IS NOT NULL
+    DROP PROCEDURE ModificarTerminal;
+
+IF OBJECT_ID('EliminarTerminal', 'P') IS NOT NULL
+    DROP PROCEDURE EliminarTerminal;
+
+IF OBJECT_ID('ListarTerminales', 'P') IS NOT NULL
+    DROP PROCEDURE ListarTerminales;
+
+IF OBJECT_ID('BuscarTerminalPorCodigo', 'P') IS NOT NULL
+    DROP PROCEDURE BuscarTerminalPorCodigo;
+
+IF OBJECT_ID('AgregarViaje', 'P') IS NOT NULL
+    DROP PROCEDURE AgregarViaje;
+
+IF OBJECT_ID('ListadoViajesTerminalMesAño', 'P') IS NOT NULL
+    DROP PROCEDURE ListadoViajesTerminalMesAño;
+
+IF OBJECT_ID('ListadoViajes', 'P') IS NOT NULL
+    DROP PROCEDURE ListadoViajes;
+
+IF OBJECT_ID('BuscarCompania', 'P') IS NOT NULL
+    DROP PROCEDURE BuscarCompania;
+
+IF OBJECT_ID('AgregarCompania', 'P') IS NOT NULL
+    DROP PROCEDURE AgregarCompania;
+
+IF OBJECT_ID('ModificarCompania', 'P') IS NOT NULL
+    DROP PROCEDURE ModificarCompania;
+
+IF OBJECT_ID('EliminarCompania', 'P') IS NOT NULL
+    DROP PROCEDURE EliminarCompania;
+
+IF OBJECT_ID('ListarCompanias', 'P') IS NOT NULL
+    DROP PROCEDURE ListarCompanias;
+
+IF OBJECT_ID('BuscarParametro', 'P') IS NOT NULL
+    DROP PROCEDURE BuscarParametro;
+
 
 -- Crear la tabla Companias
 CREATE TABLE Companias (
@@ -76,10 +134,6 @@ CREATE TABLE Parametros (
 );
 GO
 
--- Registros de prueba
-INSERT INTO Parametros (nombre, valor) VALUES 
-('ultimoDeploy', '19/08/2024 22:00');
-GO
 -- Insertar registros en la tabla Companias
 INSERT INTO Companias (nombre, direccion_matriz) VALUES 
 ('Transporte Uruguayo', 'Av. 18 de Julio 1234, Montevideo, Uruguay'),
@@ -167,6 +221,10 @@ INSERT INTO Viajes (dt_salida, dt_llegada, max_pasajeros, precio_boleto, num_and
 ('2024-07-05 12:00:00', '2024-07-05 23:00:00', 50, 3400.00, 5, 'Rutas del Sur', 'TER005');
 GO
 
+DECLARE @CurrentUTCDateTime DATETIME = GETUTCDATE();
+INSERT INTO parametros (nombre, valor)
+VALUES ('ultimoDeploy', FORMAT(SWITCHOFFSET(CONVERT(DATETIMEOFFSET, @CurrentUTCDateTime), '-03:00'), 'dd/MM/yyyy HH:mm:ss'));
+GO
 ------------------------------------------------------------TERMINALES-----------------------------------------------------------------
 --SP BuscarTerminal
 CREATE PROCEDURE BuscarTerminal
@@ -840,85 +898,4 @@ BEGIN
 	select * from Parametros where nombre=@parametro;
     END
 END;
-GO
-
-------------------------------------------------------------------------------------------------------------------------------------
-
-
--- Sentencias para probar los SP
-
-DECLARE @Resultado INT;
--- Llamar al procedimiento almacenado para eliminar una terminal
-EXEC @Resultado = EliminarTerminal @codigo_terminal = 'TER001';
-
--- Verificar el resultado
-IF @Resultado = 1
-    PRINT 'La terminal se eliminó correctamente.';
-ELSE IF @Resultado = -1
-    PRINT 'La terminal no existe en la base de datos.';
-ELSE IF @Resultado = -2
-    PRINT 'La terminal tiene viajes asociados y no se puede eliminar.';
-ELSE IF @Resultado = -3
-    PRINT 'Ocurrió un error al intentar eliminar la terminal.';
-GO
-
-DECLARE @Resultado INT;
--- Llamar al procedimiento almacenado para modificar un viaje
-EXEC @Resultado = ModificarViaje 
-                    @codigo_viaje = 1,
-                    @dt_salida = '2024-07-10 08:00:00',
-                    @dt_llegada = '2024-07-10 10:00:00',
-                    @max_pasajeros = 60,
-                    @precio_boleto = 180.00,
-                    @num_anden = 2,
-                    @nombre_compania = 'Transporte Uruguayo',
-                    @id_terminal = 'TER003';
-
--- Verificar el resultado
-IF @Resultado = 1
-    PRINT 'El viaje se modificó correctamente.';
-ELSE IF @Resultado = -1
-    PRINT 'El código de viaje no existe en la base de datos.';
-ELSE IF @Resultado = -2
-    PRINT 'El viaje ya se ha realizado y no se puede modificar.';
-ELSE IF @Resultado = -3
-    PRINT 'Ocurrió un error al intentar modificar el viaje.';
-GO
-
-DECLARE @Resultado INT;
--- Llamar al procedimiento almacenado para agregar un nuevo viaje
-EXEC @Resultado = AgregarViaje 
-                    @dt_salida = '2024-07-10 08:00:00',
-                    @dt_llegada = '2024-07-10 10:00:00',
-                    @max_pasajeros = 50,
-                    @precio_boleto = 100.00,
-                    @num_anden = 1,
-                    @nombre_compania = 'Transporte Uruguayo',
-                    @id_terminal = 'TER001';
-
--- Verificar el resultado
-IF @Resultado > 0
-    PRINT 'Se agregó el viaje correctamente. Código del nuevo viaje: ' + CAST(@Resultado AS VARCHAR(10));
-ELSE IF @Resultado = -1
-    PRINT 'La compañía especificada no existe en la base de datos.';
-ELSE IF @Resultado = -2
-    PRINT 'La terminal especificada no existe en la base de datos.';
-ELSE IF @Resultado = -3
-    PRINT 'Ocurrió un error al intentar agregar el viaje.';
-GO
-
--- Llamar al procedimiento almacenado para obtener un listado de viajes
-EXEC ListadoDeViajes;
-GO
-
--- Llamar al procedimiento almacenado para obtener el total de viajes por compañía
-EXEC TotalViajesPorCompania;
-GO
-
--- Llamar al procedimiento almacenado para obtener el total de viajes internacionales por compañía
-EXEC TotalViajesInternacionalesPorCompania;
-GO
-
--- Llamar al procedimiento almacenado para buscar compañía
-EXEC BuscarCompania @nombre_compania = 'Rutas del Sur';
 GO
