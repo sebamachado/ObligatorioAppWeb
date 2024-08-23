@@ -9,7 +9,7 @@ namespace dataPersistence
     {
         public static string GetParameter(string pName)
         {
-            string pValue = string.Empty; // Inicializa la variable de retorno
+            string pValue = string.Empty;
 
             using (SqlConnection objConnection = new SqlConnection(conection.Cnn))
             {
@@ -23,9 +23,8 @@ namespace dataPersistence
                         objConnection.Open();
                         using (SqlDataReader objReader = objCommand.ExecuteReader())
                         {
-                            if (objReader.Read()) // Lee la primera fila
+                            if (objReader.Read())
                             {
-                                // Verifica si la columna "Valor" existe y no es null
                                 if (!objReader.IsDBNull(objReader.GetOrdinal("Valor")))
                                 {
                                     pValue = objReader["Valor"].ToString();
@@ -35,7 +34,6 @@ namespace dataPersistence
                     }
                     catch (Exception ex)
                     {
-                        // Manejo de excepciones: puedes registrar el error o lanzarlo
                         throw new Exception("Error al obtener el parámetro: " + ex.Message);
                     }
                 }
