@@ -30,10 +30,10 @@ namespace sharedEntities
             get { return departureDate; }
             set
             {
-                /*if (value < DateTime.Now)
+                if (value < DateTime.Now)
                 {
                     throw new Exception("La fecha de salida no puede ser anterior a la fecha actual");
-                }*/
+                }
                 departureDate = value;
             }
         }
@@ -42,10 +42,10 @@ namespace sharedEntities
             get { return estimatedArrivalDate; }
             set
             {
-                /*if (value < DepartureDate)
+                if (value < DepartureDate)
                 {
                     throw new Exception("La fecha de llegada no puede ser anterior a la fecha de salida");
-                }*/
+                }
                 estimatedArrivalDate = value;
             }
         }
