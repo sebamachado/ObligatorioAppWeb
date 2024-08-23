@@ -1,77 +1,97 @@
 
 
--- Usar la nueva base de datos
+-- Usar base de datos
 USE montevideoTerminal;
 GO
-
+-- Eliminar tablas si existen
 IF OBJECT_ID('Viajes', 'U') IS NOT NULL
     DROP TABLE Viajes;
-
+GO
+	
 IF OBJECT_ID('Telefonos_Contacto', 'U') IS NOT NULL
     DROP TABLE Telefonos_Contacto;
+GO
 
--- Eliminar tablas si existen
 IF OBJECT_ID('Companias', 'U') IS NOT NULL
     DROP TABLE Companias;
-
+GO
+	
 IF OBJECT_ID('iTerminales', 'U') IS NOT NULL
     DROP TABLE iTerminales;
-
+GO
+	
 IF OBJECT_ID('nTerminales', 'U') IS NOT NULL
     DROP TABLE nTerminales;
-
+GO
+	
 IF OBJECT_ID('Terminales', 'U') IS NOT NULL
     DROP TABLE Terminales;
-
+GO
+	
 IF OBJECT_ID('Parametros', 'U') IS NOT NULL
     DROP TABLE Parametros;
-
+GO
+	
 -- Eliminar procedimientos almacenados si existen
 IF OBJECT_ID('BuscarTerminal', 'P') IS NOT NULL
     DROP PROCEDURE BuscarTerminal;
+GO
 
 IF OBJECT_ID('AgregarTerminal', 'P') IS NOT NULL
     DROP PROCEDURE AgregarTerminal;
-
+GO
+	
 IF OBJECT_ID('ModificarTerminal', 'P') IS NOT NULL
     DROP PROCEDURE ModificarTerminal;
-
+GO
+	
 IF OBJECT_ID('EliminarTerminal', 'P') IS NOT NULL
     DROP PROCEDURE EliminarTerminal;
-
+GO
+	
 IF OBJECT_ID('ListarTerminales', 'P') IS NOT NULL
     DROP PROCEDURE ListarTerminales;
-
+GO
+	
 IF OBJECT_ID('BuscarTerminalPorCodigo', 'P') IS NOT NULL
     DROP PROCEDURE BuscarTerminalPorCodigo;
-
+GO
+	
 IF OBJECT_ID('AgregarViaje', 'P') IS NOT NULL
     DROP PROCEDURE AgregarViaje;
-
-IF OBJECT_ID('ListadoViajesTerminalMesAño', 'P') IS NOT NULL
-    DROP PROCEDURE ListadoViajesTerminalMesAño;
-
+GO
+	
+IF OBJECT_ID('ListadoViajesTerminalMesAÃ±o', 'P') IS NOT NULL
+    DROP PROCEDURE ListadoViajesTerminalMesAÃ±o;
+GO
+	
 IF OBJECT_ID('ListadoViajes', 'P') IS NOT NULL
     DROP PROCEDURE ListadoViajes;
-
+GO
+	
 IF OBJECT_ID('BuscarCompania', 'P') IS NOT NULL
     DROP PROCEDURE BuscarCompania;
-
+GO
+	
 IF OBJECT_ID('AgregarCompania', 'P') IS NOT NULL
     DROP PROCEDURE AgregarCompania;
-
+GO
+	
 IF OBJECT_ID('ModificarCompania', 'P') IS NOT NULL
     DROP PROCEDURE ModificarCompania;
-
+GO
+	
 IF OBJECT_ID('EliminarCompania', 'P') IS NOT NULL
     DROP PROCEDURE EliminarCompania;
-
+GO
+	
 IF OBJECT_ID('ListarCompanias', 'P') IS NOT NULL
     DROP PROCEDURE ListarCompanias;
-
+GO
+	
 IF OBJECT_ID('BuscarParametro', 'P') IS NOT NULL
     DROP PROCEDURE BuscarParametro;
-
+GO
 
 -- Crear la tabla Companias
 CREATE TABLE Companias (
@@ -161,14 +181,14 @@ INSERT INTO Terminales (id, ciudad) VALUES
 ('TER004', 'Rivera'),
 ('TER005', 'Porto Alegre'),
 ('TER006', 'Montevideo'),
-('TER007', 'Paysandú'),
+('TER007', 'PaysandÃº'),
 ('TER008', 'Salto'),
 ('TER009', 'Melo'),
 ('TER010', 'Canelones'),
-('TER011', 'Tacuarembó'),
+('TER011', 'TacuarembÃ³'),
 ('TER012', 'Mercedes'),
 ('TER013', 'Durazno'),
-('TER014', 'San José'),
+('TER014', 'San JosÃ©'),
 ('TER015', 'Cerro Largo'),
 ('TER016', 'Treinta y Tres'),
 ('TER017', 'Florida'),
@@ -239,7 +259,7 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Verificar si el código existe en nTerminales (terminal nacional)
+        -- Verificar si el cÃ³digo existe en nTerminales (terminal nacional)
         DECLARE @existe_nacional BIT;
         SET @existe_nacional = 0;
 
@@ -248,7 +268,7 @@ BEGIN
             SET @existe_nacional = 1;
         END
 
-        -- Verificar si el código existe en iTerminales (terminal internacional)
+        -- Verificar si el cÃ³digo existe en iTerminales (terminal internacional)
         DECLARE @existe_internacional BIT;
         SET @existe_internacional = 0;
 
@@ -259,7 +279,7 @@ BEGIN
 
         IF @tipo_terminal = 'N'
         BEGIN
-            -- Verificar si la terminal es nacional pero el código también está en iTerminales
+            -- Verificar si la terminal es nacional pero el cÃ³digo tambiÃ©n estÃ¡ en iTerminales
             IF @existe_internacional = 1
             BEGIN
                 SET @Error = -6; -- Error de tipo de terminal incorrecto
@@ -279,7 +299,7 @@ BEGIN
         END
         ELSE IF @tipo_terminal = 'I'
         BEGIN
-            -- Verificar si la terminal es internacional pero el código también está en nTerminales
+            -- Verificar si la terminal es internacional pero el cÃ³digo tambiÃ©n estÃ¡ en nTerminales
             IF @existe_nacional = 1
             BEGIN
                 SET @Error = -6; -- Error de tipo de terminal incorrecto
@@ -299,8 +319,8 @@ BEGIN
         END
         ELSE
         BEGIN
-            -- Tipo de terminal no válido
-            SET @Error = -2; -- Tipo de terminal no válido
+            -- Tipo de terminal no vÃ¡lido
+            SET @Error = -2; -- Tipo de terminal no vÃ¡lido
             GOTO ErrorHandling;
         END
 
@@ -346,7 +366,7 @@ BEGIN
         INSERT INTO Terminales(id, ciudad)
         VALUES (@id, @ciudad);
 
-        -- Agregar la terminal nacional o internacional según el tipo
+        -- Agregar la terminal nacional o internacional segÃºn el tipo
         IF @tipo_terminal = 'N'
         BEGIN
             -- Verificar que el servicio de taxi no sea NULL
@@ -360,10 +380,10 @@ BEGIN
         END
         ELSE IF @tipo_terminal = 'I'
         BEGIN
-            -- Verificar que el país no sea NULL
+            -- Verificar que el paÃ­s no sea NULL
             IF @pais IS NULL
             BEGIN
-                SET @Error = -2; -- El país debe ser proporcionado para terminales internacionales
+                SET @Error = -2; -- El paÃ­s debe ser proporcionado para terminales internacionales
                 GOTO ErrorHandling;
             END
             INSERT INTO iTerminales(id, pais)
@@ -371,7 +391,7 @@ BEGIN
         END
         ELSE
         BEGIN
-            SET @Error = -4; -- Tipo de terminal no válido
+            SET @Error = -4; -- Tipo de terminal no vÃ¡lido
             GOTO ErrorHandling;
         END
 
@@ -418,7 +438,7 @@ BEGIN
         SET ciudad = @nueva_ciudad
         WHERE id = @id;
 
-        -- Modificar la terminal nacional o internacional según el tipo
+        -- Modificar la terminal nacional o internacional segÃºn el tipo
         IF @tipo_terminal = 'N'
         BEGIN
             -- Verificar que el servicio de taxi no sea NULL
@@ -435,10 +455,10 @@ BEGIN
         END
         ELSE IF @tipo_terminal = 'I'
         BEGIN
-            -- Verificar que el país no sea NULL
+            -- Verificar que el paÃ­s no sea NULL
             IF @nuevo_pais IS NULL
             BEGIN
-                SET @Error = -2; -- El país debe ser proporcionado para terminales internacionales
+                SET @Error = -2; -- El paÃ­s debe ser proporcionado para terminales internacionales
                 GOTO ErrorHandling;
             END
 
@@ -449,7 +469,7 @@ BEGIN
         END
         ELSE
         BEGIN
-            SET @Error = -4; -- Tipo de terminal no válido
+            SET @Error = -4; -- Tipo de terminal no vÃ¡lido
             GOTO ErrorHandling;
         END
 
@@ -482,7 +502,7 @@ BEGIN
         -- Verificar si la terminal existe
         IF NOT EXISTS (SELECT 1 FROM Terminales WHERE id = @codigo_terminal)
         BEGIN
-            SET @Error = -1; -- Código no existe en la base de datos
+            SET @Error = -1; -- CÃ³digo no existe en la base de datos
             GOTO ErrorHandling;
         END
 
@@ -499,7 +519,7 @@ BEGIN
         DELETE FROM Terminales WHERE id = @codigo_terminal;
 
         COMMIT TRANSACTION;
-        SET @Error = 1; -- Eliminación correcta
+        SET @Error = 1; -- EliminaciÃ³n correcta
         RETURN @Error;
 
     END TRY
@@ -550,7 +570,7 @@ BEGIN
 END;
 GO
 
---SP Buscar Compañia
+--SP Buscar CompaÃ±ia
 CREATE PROCEDURE BuscarTerminalPorCodigo
 @codigo_terminal CHAR(6)
 AS
@@ -581,10 +601,10 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Verificar si la compañía existe
+        -- Verificar si la compaÃ±Ã­a existe
         IF NOT EXISTS (SELECT 1 FROM Companias WHERE nombre = @nombre_compania)
         BEGIN
-            SET @Error = -1; -- La compañía no existe en la base de datos
+            SET @Error = -1; -- La compaÃ±Ã­a no existe en la base de datos
             GOTO ErrorHandling;
         END
 
@@ -599,7 +619,7 @@ BEGIN
         INSERT INTO Viajes (dt_salida, dt_llegada, max_pasajeros, precio_boleto, num_anden, nombre_compania, id_terminal)
         VALUES (@dt_salida, @dt_llegada, @max_pasajeros, @precio_boleto, @num_anden, @nombre_compania, @id_terminal);
 
-        -- Obtener el código del nuevo viaje
+        -- Obtener el cÃ³digo del nuevo viaje
         SET @NuevoCodigoViaje = SCOPE_IDENTITY();
 
         COMMIT TRANSACTION;
@@ -619,7 +639,7 @@ ErrorHandling:
 END;
 GO
 
-CREATE PROCEDURE ListadoViajesTerminalMesAño
+CREATE PROCEDURE ListadoViajesTerminalMesAÃ±o
     @id_terminal CHAR(6),
     @mes INT,
     @anio INT
@@ -639,7 +659,7 @@ BEGIN
             GOTO ErrorHandling;
         END
 
-        -- Seleccionar los viajes según el terminal y las fechas indicadas
+        -- Seleccionar los viajes segÃºn el terminal y las fechas indicadas
         SELECT 
             v.*
         FROM 
@@ -697,7 +717,7 @@ END;
 GO
 
 --------------------------------------------------------------COMPANIAS------------------------------------------------------------------
---SP Buscar Compañia
+--SP Buscar CompaÃ±ia
 CREATE PROCEDURE BuscarCompania
 @nombre_compania VARCHAR(100)
 AS
@@ -731,18 +751,18 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Verificar si la compañía existe
+        -- Verificar si la compaÃ±Ã­a existe
         IF EXISTS (SELECT 1 FROM Companias WHERE nombre = @nombre_compania)
         BEGIN
-            SET @Error = -1; -- La compañía ya existe en la base de datos
+            SET @Error = -1; -- La compaÃ±Ã­a ya existe en la base de datos
             GOTO ErrorHandling;
         END
 
-        -- Agregar la nueva compañía
+        -- Agregar la nueva compaÃ±Ã­a
         INSERT INTO Companias(nombre, direccion_matriz)
         VALUES (@nombre_compania, @direccion_matriz);
 
-        -- Agregar los teléfonos a la compañía
+        -- Agregar los telÃ©fonos a la compaÃ±Ã­a
         INSERT INTO Telefonos_Contacto(nombre_compania, telefono)
         SELECT 
             @nombre_compania, 
@@ -779,14 +799,14 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Verificar si la compañía existe
+        -- Verificar si la compaÃ±Ã­a existe
         IF NOT EXISTS (SELECT 1 FROM Companias WHERE nombre = @nombre_compania)
         BEGIN
-            SET @Error = -1; -- La compañía no existe en la base de datos
+            SET @Error = -1; -- La compaÃ±Ã­a no existe en la base de datos
             GOTO ErrorHandling;
         END
 
-        -- Actualizar la dirección de la compañía solo si se proporciona un valor no vacío
+        -- Actualizar la direcciÃ³n de la compaÃ±Ã­a solo si se proporciona un valor no vacÃ­o
         IF @direccion_matriz IS NOT NULL AND LEN(@direccion_matriz) > 0
         BEGIN
             UPDATE Companias
@@ -794,14 +814,14 @@ BEGIN
             WHERE nombre = @nombre_compania;
         END
 
-        -- Actualizar los teléfonos de la compañía solo si se proporciona una lista no vacía
+        -- Actualizar los telÃ©fonos de la compaÃ±Ã­a solo si se proporciona una lista no vacÃ­a
         IF @telefonos IS NOT NULL AND LEN(@telefonos) > 0
         BEGIN
-            -- Eliminar los teléfonos antiguos
+            -- Eliminar los telÃ©fonos antiguos
             DELETE FROM Telefonos_Contacto
             WHERE nombre_compania = @nombre_compania;
 
-            -- Agregar los nuevos teléfonos
+            -- Agregar los nuevos telÃ©fonos
             INSERT INTO Telefonos_Contacto(nombre_compania, telefono)
             SELECT 
                 @nombre_compania, 
@@ -837,24 +857,24 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Verificar si la compañía existe
+        -- Verificar si la compaÃ±Ã­a existe
         IF NOT EXISTS (SELECT 1 FROM Companias WHERE nombre = @nombre_compania)
         BEGIN
-            SET @Error = -1; -- La compañía no existe
+            SET @Error = -1; -- La compaÃ±Ã­a no existe
             GOTO ErrorHandling;
         END
 
-        -- Verificar si la compañía tiene viajes asociados
+        -- Verificar si la compaÃ±Ã­a tiene viajes asociados
         IF EXISTS (SELECT 1 FROM Viajes WHERE nombre_compania = @nombre_compania)
         BEGIN
-            SET @Error = -2; -- La compañía tiene viajes asociados, no se puede eliminar
+            SET @Error = -2; -- La compaÃ±Ã­a tiene viajes asociados, no se puede eliminar
             GOTO ErrorHandling;
         END
 
-        -- Eliminar los teléfonos de la compañía
+        -- Eliminar los telÃ©fonos de la compaÃ±Ã­a
         DELETE FROM Telefonos_Contacto WHERE nombre_compania = @nombre_compania;
 
-        -- Eliminar la compañía
+        -- Eliminar la compaÃ±Ã­a
         DELETE FROM Companias WHERE nombre = @nombre_compania;
 
         COMMIT TRANSACTION;
