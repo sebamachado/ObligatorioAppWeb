@@ -22,8 +22,8 @@ jobs:
     - name: Build the project
       run: msbuild ObligatorioAppWeb.sln /p:Configuration=Release /p:OutDir=D:/a/ObligatorioAppWeb/ObligatorioAppWeb/web/Release/
       
-    - name: List directories
-      run: ls -R D:\a\ObligatorioAppWeb\ObligatorioAppWeb\web
+    #- name: List directories
+      #run: ls -R D:\a\ObligatorioAppWeb\ObligatorioAppWeb\web
       
     - name: Upload to Server
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -35,7 +35,7 @@ jobs:
         server-dir: www.montevideoterminal.somee.com/
         cleanup: true
         
-    - name: Update lastDeploy parameter
+    - name: Create DataBase
       uses: azure/sql-action@v2.3
       with:
         connection-string: ${{ secrets.SQL_CONNECTION_STRING }}
