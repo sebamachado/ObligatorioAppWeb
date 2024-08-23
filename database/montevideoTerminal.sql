@@ -241,6 +241,7 @@ INSERT INTO Viajes (dt_salida, dt_llegada, max_pasajeros, precio_boleto, num_and
 ('2024-07-05 12:00:00', '2024-07-05 23:00:00', 50, 3400.00, 5, 'Rutas del Sur', 'TER005');
 GO
 
+-- Insertar registros en la tabla parametros
 DECLARE @CurrentUTCDateTime DATETIME = GETUTCDATE();
 INSERT INTO parametros (nombre, valor)
 VALUES ('ultimoDeploy', FORMAT(SWITCHOFFSET(CONVERT(DATETIMEOFFSET, @CurrentUTCDateTime), '-03:00'), 'dd/MM/yyyy HH:mm:ss'));
