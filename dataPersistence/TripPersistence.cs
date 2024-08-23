@@ -13,8 +13,8 @@ namespace dataPersistence
 
         public static void AddTrip(Trip pTrip)
         {
-            Company comp=pTrip.CompanyTrip;
-            Terminal term = pTrip.ArrivalTerminal;
+            //Company comp=pTrip.CompanyTrip;
+            //Terminal term = pTrip.ArrivalTerminal;
 
             SqlConnection objConection = new SqlConnection(conection.Cnn);
             SqlCommand objCommand = new SqlCommand("AgregarViaje", objConection);
@@ -25,8 +25,8 @@ namespace dataPersistence
             objCommand.Parameters.AddWithValue("@max_pasajeros", pTrip.MaxPassengers);
             objCommand.Parameters.AddWithValue("@precio_boleto", pTrip.TicketPrice);
             objCommand.Parameters.AddWithValue("@num_anden", pTrip.PlatformNumber);
-            objCommand.Parameters.AddWithValue("@nombre_compania", comp.Name);
-            objCommand.Parameters.AddWithValue("@id_terminal", term.Id);
+            objCommand.Parameters.AddWithValue("@nombre_compania", pTrip.CompanyTrip.Name);
+            objCommand.Parameters.AddWithValue("@id_terminal", pTrip.ArrivalTerminal.Id);
 
             SqlParameter objParametro = new SqlParameter("@Error", SqlDbType.Int);
             objParametro.Direction = ParameterDirection.ReturnValue;
