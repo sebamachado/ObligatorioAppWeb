@@ -21,7 +21,7 @@
             Codigo Terminal:
         </td>
         <td class="input-cell">
-            <asp:TextBox ID="txt_codTer" runat="server" Width="100%"></asp:TextBox>
+            <asp:TextBox ID="txt_codTer" runat="server" Width="100%" MaxLength="6"></asp:TextBox>
         </td>
         <td class="button-cell">
             <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="100%" onclick="btnSearch_Click" />
@@ -32,7 +32,7 @@
             Ciudad:
         </td>
         <td class="input-cell" colspan="2">
-            <asp:TextBox ID="txt_cityTer" runat="server" Width="100%"></asp:TextBox>
+            <asp:TextBox ID="txt_cityTer" runat="server" Width="100%" MaxLength="100"></asp:TextBox>
         </td>
     </tr>
     <tr>
@@ -40,7 +40,7 @@
             Pais:
         </td>
         <td class="input-cell" colspan="2">
-            <asp:TextBox ID="txt_countryTer" runat="server" Width="100%"></asp:TextBox>
+            <asp:TextBox ID="txt_countryTer" runat="server" Width="100%" MaxLength="100"></asp:TextBox>
         </td>
     </tr>
 </table>

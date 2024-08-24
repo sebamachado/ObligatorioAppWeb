@@ -21,7 +21,7 @@
             Nombre de Compañía:
         </td>
         <td class="input-cell">
-            <asp:TextBox ID="txt_nomComp" runat="server" Width="100%"></asp:TextBox>
+            <asp:TextBox ID="txt_nomComp" runat="server" Width="100%" MaxLength="100"></asp:TextBox>
         </td>
         <td class="button-cell">
             <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="100%" onclick="btnSearch_Click" />
@@ -32,7 +32,7 @@
             Dirección Matriz:
         </td>
         <td class="input-cell" colspan="2">
-            <asp:TextBox ID="txt_dirComp" runat="server" Width="100%"></asp:TextBox>
+            <asp:TextBox ID="txt_dirComp" runat="server" Width="100%" MaxLength="255"></asp:TextBox>
         </td>
     </tr>
     <tr>

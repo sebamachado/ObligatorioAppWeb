@@ -57,7 +57,6 @@ namespace program
         public static List<InternationalTerminal> ListIterminals()
         {
             return TerminalPersistence.ListIterminals();
-
         }
 
         public static void CreateI(NationalTerminal objNterminal)

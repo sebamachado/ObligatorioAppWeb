@@ -30,10 +30,6 @@ namespace sharedEntities
             get { return departureDate; }
             set
             {
-                if (value < DateTime.Now)
-                {
-                    throw new Exception("La fecha de salida no puede ser anterior a la fecha actual");
-                }
                 departureDate = value;
             }
         }

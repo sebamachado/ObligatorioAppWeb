@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 using System.Drawing;
 using program;
 using sharedEntities;
@@ -58,27 +57,28 @@ public partial class NterminalMaintenance : System.Web.UI.Page
         try
         {
             if (string.IsNullOrWhiteSpace(txt_codTer.Text))
+            {
                 throw new Exception("Código de Terminal es de ingreso obligatorio.");
-             
-            string codTerm = txt_codTer.Text.Trim();
+            }
+            if (!Is6Digits(txt_codTer.Text.Trim()))
+            {
+                throw new Exception("El Codigo de la terminal debe tener 6 digitos.");
+            }
 
-            NationalTerminal objNterminal = TerminalActions.ReadN(codTerm);
-
+            NationalTerminal objNterminal = TerminalActions.ReadN(txt_codTer.Text.Trim());
             if (objNterminal != null)
             {
                 EnableButtons(false);
                 txt_cityTer.Text = objNterminal.CityName;
 
-                // Asigna el valor correcto al RadioButtonList
                 if (objNterminal.TaxiServiceText == "SI")
                 {
-                    rbl_taxiService.SelectedValue = "true"; // Selecciona "SI"
+                    rbl_taxiService.SelectedValue = "true";
                 }
                 else
                 {
-                    rbl_taxiService.SelectedValue = "false"; // Selecciona "NO"
+                    rbl_taxiService.SelectedValue = "false";
                 }
-
                 Session["objNterminal"] = objNterminal;
             }
             else
@@ -86,7 +86,6 @@ public partial class NterminalMaintenance : System.Web.UI.Page
                 EnableButtons(true);
                 lblError.ForeColor = Color.Blue;
                 lblError.Text = "No existe una Terminal con ese Código";
-
                 Session["objNterminal"] = null;
             }
         }
@@ -103,34 +102,24 @@ public partial class NterminalMaintenance : System.Web.UI.Page
     {
         try
         {
-            string codTerm = txt_codTer.Text.Trim();
-            string cityTer = txt_cityTer.Text.Trim();
-            string selectedValue = rbl_taxiService.SelectedValue;
-
-            // Validar parámetros
-            if (string.IsNullOrWhiteSpace(codTerm))
+            if (string.IsNullOrWhiteSpace(txt_codTer.Text.Trim()))
             {
                 throw new Exception("Código de la Terminal es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(cityTer))
+            if (string.IsNullOrWhiteSpace(txt_cityTer.Text.Trim()))
             {
                 throw new Exception("Ciudad es de ingreso obligatorio.");
             }
-            // Validar la opción seleccionada
-            if (string.IsNullOrEmpty(selectedValue))
+            if (string.IsNullOrEmpty(rbl_taxiService.SelectedValue))
             {
                 throw new Exception("Seleccione una opción para Servicio Taxi.");
             }
 
-            bool taxiService = bool.Parse(selectedValue);
-
-            NationalTerminal objNterminal = new NationalTerminal(codTerm, cityTer, taxiService);
-
+            NationalTerminal objNterminal = new NationalTerminal(txt_codTer.Text.Trim(), txt_cityTer.Text.Trim(), bool.Parse(rbl_taxiService.SelectedValue));
             TerminalActions.CreateI(objNterminal);
 
             lblError.ForeColor = Color.Blue;
             lblError.Text = "Alta con éxito";
-
             CleanForm();
         }
         catch (Exception ex)
@@ -146,34 +135,25 @@ public partial class NterminalMaintenance : System.Web.UI.Page
     {
         try
         {
-            string codTerm = txt_codTer.Text.Trim();
-            string cityTer = txt_cityTer.Text.Trim();
-            string selectedValue = rbl_taxiService.SelectedValue;
-
-            // Validar parámetros
-            if (string.IsNullOrWhiteSpace(codTerm))
+            if (string.IsNullOrWhiteSpace(txt_codTer.Text.Trim()))
             {
                 throw new Exception("Código de la Terminal es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(cityTer))
+            if (string.IsNullOrWhiteSpace(txt_cityTer.Text.Trim()))
             {
                 throw new Exception("Ciudad es de ingreso obligatorio.");
             }
             // Validar la opción seleccionada
-            if (string.IsNullOrEmpty(selectedValue))
+            if (string.IsNullOrEmpty(rbl_taxiService.SelectedValue))
             {
                 throw new Exception("Seleccione una opción para Servicio Taxi.");
             }
 
-            bool taxiService = bool.Parse(selectedValue);
-
-            NationalTerminal objNterminal = new NationalTerminal(codTerm, cityTer, taxiService);
-
+            NationalTerminal objNterminal = new NationalTerminal(txt_codTer.Text.Trim(), txt_cityTer.Text.Trim(), bool.Parse(rbl_taxiService.SelectedValue));
             TerminalActions.UpdateN(objNterminal);
 
             lblError.ForeColor = Color.Blue;
             lblError.Text = "Modificación con éxito";
-
             CleanForm();
         }
         catch (Exception ex)
@@ -187,19 +167,12 @@ public partial class NterminalMaintenance : System.Web.UI.Page
     {
         try
         {
-            string codTerm = txt_codTer.Text.Trim();
-            string cityTer = txt_cityTer.Text.Trim();
-            string selectedValue = rbl_taxiService.SelectedValue;
-
-            // Validar parámetros
-            if (string.IsNullOrWhiteSpace(codTerm))
+            if (string.IsNullOrWhiteSpace(txt_codTer.Text.Trim()))
             {
                 throw new Exception("Código de la Terminal es de ingreso obligatorio.");
             }
-            bool taxiService = bool.Parse(selectedValue);
 
-            NationalTerminal objNterminal = new NationalTerminal(codTerm, cityTer, taxiService);
-
+            NationalTerminal objNterminal = new NationalTerminal(txt_codTer.Text.Trim(), txt_cityTer.Text.Trim(), bool.Parse(rbl_taxiService.SelectedValue));
             TerminalActions.DeleteN(objNterminal);
 
             lblError.ForeColor = Color.Blue;
@@ -212,7 +185,11 @@ public partial class NterminalMaintenance : System.Web.UI.Page
             lblError.Text = ex.Message;
         }
     }
-
+    private bool Is6Digits(string value)
+    {
+        // Valida el formato de número de teléfono: uno o más números separados por punto y coma
+        return System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d{6}$");
+    }
 }
 
 

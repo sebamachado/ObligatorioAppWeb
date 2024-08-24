@@ -18,7 +18,7 @@
             <table class="table-container">
                 <tr>
                     <td class="label-cell">
-                        Fecha/Hora Salida:
+                        Salida:
                     </td>
                     <td class="input-cell">
                         <asp:TextBox ID="txt_DepartureDate" runat="server" Width="100%" MaxLength="19"></asp:TextBox>
@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <td class="label-cell">
-                        Fecha/Hora Llegada:
+                        Llegada:
                     </td>
                     <td class="input-cell">
                         <asp:TextBox ID="txt_EstimatedArrivalDate" runat="server" Width="100%" MaxLength="19"></asp:TextBox>
@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <td class="label-cell">
-                        Máximo de Pasajeros:
+                        Pasajeros:
                     </td>
                     <td class="input-cell">
                         <asp:TextBox ID="txt_MaxPassengers" runat="server" Width="100%" MaxLength="2"></asp:TextBox>

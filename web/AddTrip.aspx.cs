@@ -18,6 +18,8 @@ public partial class AddTrip : System.Web.UI.Page
 
     private void CleanForm()
     {
+        txt_DepartureDate.Attributes["type"] = "datetime-local";
+        txt_EstimatedArrivalDate.Attributes["type"] = "datetime-local";
         txt_DepartureDate.Text = "";
         txt_EstimatedArrivalDate.Text = "";
         txt_MaxPassengers.Text = "";
@@ -38,15 +40,11 @@ public partial class AddTrip : System.Web.UI.Page
     {
         try
         {
-            // Verificar campos obligatorios
-            string departureDateStr = txt_DepartureDate.Text.Trim();
-            string estimatedArrivalDateStr = txt_EstimatedArrivalDate.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(departureDateStr))
+            if (string.IsNullOrWhiteSpace(txt_DepartureDate.Text.Trim()))
             {
                 throw new Exception("La fecha y hora de salida es obligatoria.");
             }
-            if (string.IsNullOrWhiteSpace(estimatedArrivalDateStr))
+            if (string.IsNullOrWhiteSpace(txt_EstimatedArrivalDate.Text.Trim()))
             {
                 throw new Exception("La fecha y hora aproximada de llegada es obligatoria.");
             }
@@ -83,22 +81,9 @@ public partial class AddTrip : System.Web.UI.Page
                 throw new Exception("Número de Andén solo acepta digitos.");
             }
 
-            // Validar y convertir fechas
-            DateTime DepartureDate;
-            DateTime EstimatedArrivalDate;
-            string format = "dd/MM/yyyy HH:mm:ss";
+            DateTime departureDate = DateTime.ParseExact(txt_DepartureDate.Text.Trim(), "yyyy-MM-ddTHH:mm", null);
+            DateTime estimatedArrivalDate = DateTime.ParseExact(txt_EstimatedArrivalDate.Text.Trim(), "yyyy-MM-ddTHH:mm", null);
 
-            if (!DateTime.TryParseExact(departureDateStr, format, null, System.Globalization.DateTimeStyles.None, out DepartureDate))
-            {
-                throw new Exception("La fecha/hora no tiene el formato correcto. Se espera dd/MM/yyyy HH:mm:ss");
-            }
-
-            if (!DateTime.TryParseExact(estimatedArrivalDateStr, format, null, System.Globalization.DateTimeStyles.None, out EstimatedArrivalDate))
-            {
-                throw new Exception("La fecha/hora no tiene el formato correcto. Se espera dd/MM/yyyy HH:mm:ss");
-            }
-
-            // Convertir otros parámetros
             int MaxPassengers = int.Parse(txt_MaxPassengers.Text.Trim());
             double TicketPrice = double.Parse(txt_TicketPrice.Text.Trim());
             int PlatformNumber = int.Parse(txt_PlatformNumber.Text.Trim());
@@ -119,7 +104,7 @@ public partial class AddTrip : System.Web.UI.Page
             }
 
             // Crear el objeto Trip
-            Trip objTrip = new Trip(DepartureDate, EstimatedArrivalDate, MaxPassengers, TicketPrice, PlatformNumber, arrivalTerminal, companyTrip);
+            Trip objTrip = new Trip(departureDate, estimatedArrivalDate, MaxPassengers, TicketPrice, PlatformNumber, arrivalTerminal, companyTrip);
             TripActions.AddTrip(objTrip);
 
             lblError.ForeColor = Color.Blue;
@@ -131,16 +116,14 @@ public partial class AddTrip : System.Web.UI.Page
             lblError.Text = ex.Message;
         }
     }
-    // metodos auxiliares
-    // Método para validar el número de teléfono
+
     private bool IsValidValue(string value)
     {
-        // Valida el formato de número de teléfono: uno o más números separados por punto y coma
         return System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d+(\.\d+)?$");
     }
+
     private bool IsNumber(string value)
     {
-        // Valida el formato de número de teléfono: uno o más números separados por punto y coma
         return System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d+$");
     }
 }

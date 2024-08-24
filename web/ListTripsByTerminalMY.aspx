@@ -19,22 +19,25 @@
             <table class="table-container">
                 <tr>
                     <td class="label-cell">
-                        Código Terminal:
+                        Terminal:
                     </td>
                     <td class="input-cell">
-                        <asp:TextBox ID="txt_terminalCode" runat="server" Width="80px" MaxLength="6"></asp:TextBox>
+                        <asp:DropDownList ID="ddl_terminal" runat="server" Width="90px">
+                        </asp:DropDownList>
                     </td>
                     <td class="label-cell">
                         Mes:
                     </td>
                     <td class="input-cell">
-                        <asp:TextBox ID="txt_month" runat="server" Width="30px" MaxLength="2"></asp:TextBox>
+                        <asp:DropDownList ID="ddl_month" runat="server" Width="80px">
+                        </asp:DropDownList>
                     </td>
                     <td class="label-cell">
                         Año:
                     </td>
                     <td class="input-cell">
-                        <asp:TextBox ID="txt_year" runat="server" Width="30px" MaxLength="4"></asp:TextBox>
+                        <asp:DropDownList ID="ddl_year" runat="server" Width="80px">
+                        </asp:DropDownList>
                     </td>
                     <td class="button-cell">
                         <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="100px" OnClick="btnSearch_Click" />

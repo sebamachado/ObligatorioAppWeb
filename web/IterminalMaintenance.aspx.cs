@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 using System.Drawing;
 using program;
 using sharedEntities;
@@ -59,18 +58,20 @@ public partial class IterminalMaintenance : System.Web.UI.Page
         try
         {
             if (string.IsNullOrWhiteSpace(txt_codTer.Text))
+            {
                 throw new Exception("Código de Terminal es de ingreso obligatorio.");
+            }
+            if (!Is6Digits(txt_codTer.Text.Trim()))
+            {
+                throw new Exception("El Codigo de la terminal debe tener 6 digitos.");
+            }
 
-            string codTerm = txt_codTer.Text.Trim();
-
-            InternationalTerminal objIterminal = TerminalActions.ReadI(codTerm);
-
+            InternationalTerminal objIterminal = TerminalActions.ReadI(txt_codTer.Text.Trim());
             if (objIterminal != null)
             {
                 EnableButtons(false);
                 txt_cityTer.Text = objIterminal.CityName;
                 txt_countryTer.Text = objIterminal.Country;
-
                 Session["objIterminal"] = objIterminal;
             }
             else
@@ -78,7 +79,6 @@ public partial class IterminalMaintenance : System.Web.UI.Page
                 EnableButtons(true);
                 lblError.ForeColor = Color.Blue;
                 lblError.Text = "No existe una Terminal con ese Código";
-
                 Session["objIterminal"] = null;
             }
         }
@@ -95,32 +95,26 @@ public partial class IterminalMaintenance : System.Web.UI.Page
     {
         try
         {
-            string codTerm = txt_codTer.Text.Trim();
-            string cityTer = txt_cityTer.Text.Trim();
-            string countryTerm = txt_countryTer.Text.Trim();
-
             // Validar parámetros
-            if (string.IsNullOrWhiteSpace(codTerm))
+            if (string.IsNullOrWhiteSpace(txt_codTer.Text.Trim()))
             {
                 throw new Exception("Código de la Terminal es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(cityTer))
+            if (string.IsNullOrWhiteSpace(txt_cityTer.Text.Trim()))
             {
                 throw new Exception("Ciudad es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(countryTerm))
+            if (string.IsNullOrWhiteSpace(txt_countryTer.Text.Trim()))
             {
                 throw new Exception("Pais es de ingreso obligatorio.");
             }
 
 
-            InternationalTerminal objIterminal = new InternationalTerminal(codTerm, cityTer, countryTerm);
-
+            InternationalTerminal objIterminal = new InternationalTerminal(txt_codTer.Text.Trim(), txt_cityTer.Text.Trim(), txt_countryTer.Text.Trim());
             TerminalActions.CreateI(objIterminal);
 
             lblError.ForeColor = Color.Blue;
             lblError.Text = "Alta con éxito";
-
             CleanForm();
         }
         catch (Exception ex)
@@ -136,31 +130,24 @@ public partial class IterminalMaintenance : System.Web.UI.Page
     {
         try
         {
-            string codTerm = txt_codTer.Text.Trim();
-            string cityTer = txt_cityTer.Text.Trim();
-            string countryTerm = txt_countryTer.Text.Trim();
-
-            // Validar parámetros
-            if (string.IsNullOrWhiteSpace(codTerm))
+            if (string.IsNullOrWhiteSpace(txt_codTer.Text.Trim()))
             {
                 throw new Exception("Código de la Terminal es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(cityTer))
+            if (string.IsNullOrWhiteSpace(txt_cityTer.Text.Trim()))
             {
                 throw new Exception("Ciudad es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(countryTerm))
+            if (string.IsNullOrWhiteSpace(txt_countryTer.Text.Trim()))
             {
                 throw new Exception("Pais es de ingreso obligatorio.");
             }
 
-            InternationalTerminal objIterminal = new InternationalTerminal(codTerm, cityTer, countryTerm);
-
+            InternationalTerminal objIterminal = new InternationalTerminal(txt_codTer.Text.Trim(), txt_cityTer.Text.Trim(), txt_countryTer.Text.Trim());
             TerminalActions.UpdateI(objIterminal);
 
             lblError.ForeColor = Color.Blue;
             lblError.Text = "Modificación con éxito";
-
             CleanForm();
         }
         catch (Exception ex)
@@ -174,18 +161,12 @@ public partial class IterminalMaintenance : System.Web.UI.Page
     {
         try
         {
-            string codTerm = txt_codTer.Text.Trim();
-            string cityTer = txt_cityTer.Text.Trim();
-            string countryTerm = txt_countryTer.Text.Trim();
-
-            // Validar parámetros
-            if (string.IsNullOrWhiteSpace(codTerm))
+            if (string.IsNullOrWhiteSpace(txt_codTer.Text.Trim()))
             {
                 throw new Exception("Código de la Terminal es de ingreso obligatorio.");
             }
 
-            InternationalTerminal objIterminal = new InternationalTerminal(codTerm, cityTer, countryTerm);
-
+            InternationalTerminal objIterminal = new InternationalTerminal(txt_codTer.Text.Trim(), txt_cityTer.Text.Trim(), txt_countryTer.Text.Trim());
             TerminalActions.DeleteI(objIterminal);
 
             lblError.ForeColor = Color.Blue;
@@ -198,7 +179,11 @@ public partial class IterminalMaintenance : System.Web.UI.Page
             lblError.Text = ex.Message;
         }
     }
-
+    private bool Is6Digits(string value)
+    {
+        // Valida el formato de número de teléfono: uno o más números separados por punto y coma
+        return System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d{6}$");
+    }
 }
 
 

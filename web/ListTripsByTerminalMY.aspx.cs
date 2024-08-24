@@ -24,9 +24,11 @@ public partial class ListTripsByTerminalMY : System.Web.UI.Page
         gvListTripTerminalMY.DataSource = null;
         gvListTripTerminalMY.DataBind();
 
-        txt_terminalCode.Text = "";
-        txt_month.Text = "";
-        txt_year.Text = "";
+        PopulateTerminalDropdown();
+        PopulateYearDropdown();
+        PopulateMonthDropdown();
+        ddl_month.Text = "1";
+        ddl_year.Text = "1900";
 
         lblError.Text = "";
         AllTrips();
@@ -34,7 +36,6 @@ public partial class ListTripsByTerminalMY : System.Web.UI.Page
     private void AllTrips()
     {
         lblError.Text = "";
-        //btnSearch.Enabled = true;
 
         gvListTripTerminalMY.DataSource = null;
         gvListTripTerminalMY.DataBind();
@@ -74,22 +75,31 @@ public partial class ListTripsByTerminalMY : System.Web.UI.Page
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         lblError.Text = "";
-        //btnSearch.Enabled = true;
 
         gvListTripTerminalMY.DataSource = null;
         gvListTripTerminalMY.DataBind();
-        string terminalCode = txt_terminalCode.Text.Trim();
-        string month = txt_month.Text.Trim();
-        string year = txt_year.Text.Trim();
+        string shortTerminalCode = ddl_terminal.Text.Trim().Length > 6 ? ddl_terminal.Text.Trim().Substring(0, 6) : ddl_terminal.Text.Trim();
 
         try
         {
-            Terminal arrivalTerminal = TerminalActions.Read(terminalCode);
+            if (string.IsNullOrWhiteSpace(ddl_terminal.Text.Trim()) || ddl_terminal.Text.Trim() == "Seleccione")
+            {
+                throw new Exception("Código de Terminal es de ingreso obligatorio.");
+            }
+            Terminal arrivalTerminal = TerminalActions.Read(shortTerminalCode);
             if (arrivalTerminal == null)
             {
                 throw new Exception("No existe una Terminal con ese Código.");
             }
-            List<Trip> colTripsTMY = TripActions.ListTripsByTerminalMY(arrivalTerminal, month, year);
+            if (string.IsNullOrWhiteSpace(ddl_month.Text.Trim()))
+            {
+                throw new Exception("El Mes es de ingreso obligatorio.");
+            }
+            if (string.IsNullOrWhiteSpace(ddl_year.Text.Trim()))
+            {
+                throw new Exception("El Año es de ingreso obligatorio.");
+            }
+            List<Trip> colTripsTMY = TripActions.ListTripsByTerminalMY(arrivalTerminal, ddl_month.Text.Trim(), ddl_year.Text.Trim());
 
             if (colTripsTMY.Count > 0)
             {
@@ -114,4 +124,36 @@ public partial class ListTripsByTerminalMY : System.Web.UI.Page
             lblError.Text = ex.Message;
         }
     }
+    private void PopulateYearDropdown()
+    {
+        for (int year = 1900; year <= 2100; year++)
+        {
+            ddl_year.Items.Add(new ListItem(year.ToString(), year.ToString()));
+        }
+    }
+    private void PopulateMonthDropdown()
+    {
+        for (int month = 1; month <= 12; month++)
+        {
+            ddl_month.Items.Add(new ListItem(month.ToString(), month.ToString()));
+        }
+    }
+    private void PopulateTerminalDropdown()
+    {
+        ddl_terminal.Items.Clear();
+        List<NationalTerminal> nationalTerminals = TerminalActions.ListNterminals();
+        List<InternationalTerminal> internationalTerminals = TerminalActions.ListIterminals();
+        ddl_terminal.Items.Add(new ListItem("Seleccione", ""));
+
+        foreach (var terminal in nationalTerminals)
+        {
+            ddl_terminal.Items.Add(new ListItem(terminal.Id + " - " + terminal.CityName));
+        }
+
+        foreach (var terminal in internationalTerminals)
+        {
+            ddl_terminal.Items.Add(new ListItem(terminal.Id + " - " + terminal.CityName + ", " + terminal.Country));
+        }
+    }
+
 }

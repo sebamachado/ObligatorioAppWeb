@@ -58,19 +58,17 @@ public partial class CompanyMaintenance : System.Web.UI.Page
     {
         try
         {
-            if (txt_nomComp.Text == "")
+            if (string.IsNullOrWhiteSpace(txt_nomComp.Text))
+            {
                 throw new Exception("Nombre de la Compañia es de ingreso obligatorio.");
+            }
 
-            string compName = txt_nomComp.Text.Trim();
-
-            Company objCompany = CompanyAction.Read(compName);
-
+            Company objCompany = CompanyAction.Read(txt_nomComp.Text.Trim());
             if (objCompany != null)
             {
                 EnableButtons(false);
                 txt_dirComp.Text = objCompany.MatrizAddress; 
                 txt_telComp.Text = objCompany.ContactPhone;
-
                 Session["objCompany"] = objCompany;
             }
             else
@@ -95,30 +93,24 @@ public partial class CompanyMaintenance : System.Web.UI.Page
     {
         try
         {
-            string compName = txt_nomComp.Text.Trim();
-            string compDir = txt_dirComp.Text.Trim();
-            string compTel = txt_telComp.Text.Trim();
-
-            // Validar parametros
-            if (string.IsNullOrWhiteSpace(compName))
+            if (string.IsNullOrWhiteSpace(txt_nomComp.Text.Trim()))
             {
                 throw new Exception("Nombre de la Compañia es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(compDir))
+            if (string.IsNullOrWhiteSpace(txt_dirComp.Text.Trim()))
             {
                 throw new Exception("Direccion de la Compañia es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(compTel))
+            if (string.IsNullOrWhiteSpace(txt_telComp.Text.Trim()))
             {
                 throw new Exception("Número de teléfono es de ingreso obligatorio.");
             }
-            if (!IsValidPhoneNumber(compTel))
+            if (!IsValidPhoneNumber(txt_telComp.Text.Trim()))
             {
                 throw new Exception("Por favor, ingrese uno o más números de teléfono válidos, separados por punto y coma. Ejemplos: 7685855 o 64567567;745745747. Asegúrese de que no haya un punto y coma al final de la cadena.");
             }
 
-            Company objCompany = new Company(compName, compDir, compTel); 
-
+            Company objCompany = new Company(txt_nomComp.Text.Trim(), txt_dirComp.Text.Trim(), txt_telComp.Text.Trim()); 
             CompanyAction.Create(objCompany);
 
             lblError.ForeColor = Color.Blue;
@@ -137,30 +129,24 @@ public partial class CompanyMaintenance : System.Web.UI.Page
     {
         try
         {
-            string compName = txt_nomComp.Text.Trim();
-            string compDir = txt_dirComp.Text.Trim();
-            string compTel = txt_telComp.Text.Trim();
-
-            // Validar parametros
-            if (string.IsNullOrWhiteSpace(compName))
+            if (string.IsNullOrWhiteSpace(txt_nomComp.Text.Trim()))
             {
                 throw new Exception("Nombre de la Compañia es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(compDir))
+            if (string.IsNullOrWhiteSpace(txt_dirComp.Text.Trim()))
             {
                 throw new Exception("Direccion de la Compañia es de ingreso obligatorio.");
             }
-            if (string.IsNullOrWhiteSpace(compTel))
+            if (string.IsNullOrWhiteSpace(txt_telComp.Text.Trim()))
             {
                 throw new Exception("Número de teléfono es de ingreso obligatorio.");
             }
-            if (!IsValidPhoneNumber(compTel))
+            if (!IsValidPhoneNumber(txt_telComp.Text.Trim()))
             {
                 throw new Exception("Por favor, ingrese uno o más números de teléfono válidos, separados por punto y coma. Ejemplos: 7685855 o 64567567;745745747. Asegúrese de que no haya un punto y coma al final de la cadena.");
             }
 
-            Company objCompany = new Company(compName, compDir, compTel);
-
+            Company objCompany = new Company(txt_nomComp.Text.Trim(), txt_dirComp.Text.Trim(), txt_telComp.Text.Trim());
             CompanyAction.Update(objCompany);
 
             lblError.ForeColor = Color.Blue;
@@ -179,18 +165,12 @@ public partial class CompanyMaintenance : System.Web.UI.Page
     {
         try
         {
-            string compName = txt_nomComp.Text.Trim();
-            string compDir = txt_dirComp.Text.Trim();
-            string compTel = txt_telComp.Text.Trim();
-
-            // Validar parametros
-            if (string.IsNullOrWhiteSpace(compName))
+            if (string.IsNullOrWhiteSpace(txt_nomComp.Text.Trim()))
             {
                 throw new Exception("Nombre de la Compañía es de ingreso obligatorio.");
             }
 
-            Company objCompany = new Company(compName, compDir, compTel);
-
+            Company objCompany = new Company(txt_nomComp.Text.Trim(), txt_dirComp.Text.Trim(), txt_telComp.Text.Trim());
             CompanyAction.Delete(objCompany);
 
             lblError.ForeColor = Color.Blue;
@@ -209,7 +189,6 @@ public partial class CompanyMaintenance : System.Web.UI.Page
     // Método para validar el número de teléfono
     private bool IsValidPhoneNumber(string phoneNumber)
     {
-        // Valida el formato de número de teléfono: uno o más números separados por punto y coma
         return System.Text.RegularExpressions.Regex.IsMatch(phoneNumber, @"^\d+(;\d+)*$");
     }
 }
