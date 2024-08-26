@@ -59,11 +59,6 @@ namespace program
             return TerminalPersistence.ListIterminals();
         }
 
-        public static void CreateI(NationalTerminal objNterminal)
-        {
-            throw new NotImplementedException();
-        }
-
         public static Terminal Read(string pCodeTerminal)
         {
             return TerminalPersistence.FindTerminal(pCodeTerminal);
